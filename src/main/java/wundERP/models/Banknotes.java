@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/*
 public class Banknotes {
     public static Set<Integer> banknoteList = new HashSet<>();
 
@@ -26,3 +27,4 @@ public class Banknotes {
         banknoteList.add(20000);
     }
 }
+*/

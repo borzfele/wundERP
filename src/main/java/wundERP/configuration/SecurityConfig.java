@@ -23,19 +23,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/open-day").hasRole("user")
+                .antMatchers("/", "/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl("/workspace", true)
-                .loginPage("/login")
-                .permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                .formLogin().defaultSuccessUrl("/workspace")
+                .and()
+                .logout().logoutSuccessUrl("/login").permitAll();
     }
 
 }

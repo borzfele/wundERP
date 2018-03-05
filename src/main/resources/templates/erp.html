@@ -5,15 +5,16 @@
     <title>napnyitás</title>
 </head>
 <body>
-    pina
-
     <form th:action="@{/logout}" method="post">
         <button type="submit">Logout</button>
     </form>
 
-    <a href="/openDay">
+    <a th:if="${openingPage} == true" href="/open-day">
         <button>Open Day</button>
     </a>
+    <p th:if="${openingPage} == false">
+        pina
+    </p>
 
 </body>
 </html>
