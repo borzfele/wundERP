@@ -30,7 +30,6 @@ public class DailyAccountController {
     @RequestMapping(value = "/open-day", method = RequestMethod.GET)
     public String renderDayOpen(Model model) {
         model.addAttribute("dailyAccount", new DailyAccount());
-        logger.info("rendering dayopen form");
         return "day-open-form";
     }
 
@@ -40,6 +39,30 @@ public class DailyAccountController {
         dailyAccount.setOwner(userService.getCurrentUser());
         dailyAccount.setDate(Calendar.getInstance());
         dailyAccountService.saveDailyAccount(dailyAccount);
+        return "redirect:/workspace";
+    }
+
+    @RequestMapping(value = "/close-day", method = RequestMethod.GET)
+    public String renderDayClose(Model model) {
+        model.addAttribute("openedDailyAccount", new DailyAccount());
+        return "day-close-form";
+    }
+
+    @RequestMapping(value = "/close-day", method = RequestMethod.POST)
+    public String saveDayClose(@ModelAttribute DailyAccount dailyAccount) {
+        DailyAccount lastOpened = dailyAccountService.getLast();
+
+        lastOpened.setClosed(true);
+        lastOpened.setCassaBalance(dailyAccount.getCassaBalance());
+        lastOpened.setCloseCash(dailyAccount.getCloseCash());
+        lastOpened.setTerminalBalance(dailyAccount.getTerminalBalance());
+        lastOpened.setPosBalance(dailyAccount.getPosBalance());
+        int dailyBalance = lastOpened.getCloseCash()
+                + lastOpened.getTerminalBalance()
+                - lastOpened.getOpenCash();
+        lastOpened.setDailyBalance(dailyBalance);
+        lastOpened.setComments(dailyAccount.getComments());
+        dailyAccountService.saveDailyAccount(lastOpened);
         return "redirect:/workspace";
     }
 }

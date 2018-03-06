@@ -9,12 +9,24 @@
         <button type="submit">Logout</button>
     </form>
 
-    <a th:if="${openingPage} == true" href="/open-day">
-        <button>Open Day</button>
-    </a>
-    <p th:if="${openingPage} == false">
-        pina
-    </p>
+    <div th:if="${openingPage} == true">
+        <a href="/open-day">
+            <button>Open Day</button>
+        </a>
+    </div>
+
+    <div th:if="${openingPage} == false">
+        <a href="/add-income">
+            <button> Add Income </button>
+        </a>
+        <a href="/add-expense">
+            <button> Add Expense </button>
+        </a>
+        <a href="/close-day">
+            <button> Close </button>
+        </a>
+
+    </div>
 
 </body>
 </html>
