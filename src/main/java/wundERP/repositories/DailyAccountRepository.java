@@ -10,5 +10,6 @@ import java.util.ArrayList;
 public interface DailyAccountRepository extends JpaRepository<DailyAccount, Long> {
 
     ArrayList<DailyAccount> findAll();
+    DailyAccount findById(long id);
 
 }

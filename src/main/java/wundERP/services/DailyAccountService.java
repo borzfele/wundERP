@@ -15,6 +15,10 @@ public class DailyAccountService {
         this.dailyAccountRepository = dailyAccountRepository;
     }
 
+    public DailyAccount findById(long id) {
+        return dailyAccountRepository.findById(id);
+    }
+
     public void saveDailyAccount(DailyAccount dailyAccount) {
         dailyAccountRepository.save(dailyAccount);
     }

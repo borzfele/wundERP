@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wundERP.models.DailyAccount;
 import wundERP.services.DailyAccountService;
+import wundERP.services.TransactionService;
 import wundERP.services.UserServiceImpl;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Controller
@@ -19,12 +21,14 @@ public class DailyAccountController {
 
     private final UserServiceImpl userService;
     private final DailyAccountService dailyAccountService;
+    private final TransactionService transactionService;
     private static final Logger logger = LoggerFactory.getLogger(ViewControllers.class);
 
     @Autowired
-    public DailyAccountController(UserServiceImpl userService, DailyAccountService dailyAccountService) {
+    public DailyAccountController(UserServiceImpl userService, DailyAccountService dailyAccountService, TransactionService transactionService) {
         this.userService = userService;
         this.dailyAccountService = dailyAccountService;
+        this.transactionService = transactionService;
     }
 
     @RequestMapping(value = "/open-day", method = RequestMethod.GET)
@@ -52,14 +56,21 @@ public class DailyAccountController {
     public String saveDayClose(@ModelAttribute DailyAccount dailyAccount) {
         DailyAccount lastOpened = dailyAccountService.getLast();
 
+
         lastOpened.setClosed(true);
+        logger.info("flag set to closed");
         lastOpened.setCassaBalance(dailyAccount.getCassaBalance());
+        logger.info("cassa balance set");
         lastOpened.setCloseCash(dailyAccount.getCloseCash());
+        logger.info("close cash set");
         lastOpened.setTerminalBalance(dailyAccount.getTerminalBalance());
+        logger.info("terminal balance set");
         lastOpened.setPosBalance(dailyAccount.getPosBalance());
+        logger.info("posbalance set");
+        int sumOfDailyTransactions = transactionService.getSumOf(transactionService.findAllByDailyAccount(dailyAccountService.findById(lastOpened.getId())));
         int dailyBalance = lastOpened.getCloseCash()
                 + lastOpened.getTerminalBalance()
-                - lastOpened.getOpenCash();
+                - lastOpened.getOpenCash() + sumOfDailyTransactions;
         lastOpened.setDailyBalance(dailyBalance);
         lastOpened.setComments(dailyAccount.getComments());
         dailyAccountService.saveDailyAccount(lastOpened);

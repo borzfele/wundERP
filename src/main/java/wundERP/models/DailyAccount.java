@@ -2,6 +2,7 @@ package wundERP.models;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class DailyAccount {
