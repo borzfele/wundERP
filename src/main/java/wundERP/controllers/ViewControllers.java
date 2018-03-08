@@ -22,7 +22,7 @@ public class ViewControllers {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderHome() {
         logger.info("rendering homepage");
-        return "index";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
