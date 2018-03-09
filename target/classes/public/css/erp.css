@@ -1,0 +1,47 @@
+.asd {
+    height: 50vh;
+    background-color: darkgrey;
+    margin: auto;
+    position: relative;
+    top: 20vh;
+}
+
+#panel-cont {
+    margin: auto;
+}
+
+.button-cont{
+    height: 48%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#pos-button {
+    height: 49%;
+    margin-bottom: 1%;
+    width: 100%;
+    background-color: blue;
+    color: #ffffff;
+}
+
+div button {
+    width: 100%;
+    height: 100%;
+}
+
+#close-button {
+    height: 49%;
+    background-color: aquamarine;
+}
+
+#stats {
+    height: 48%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.container {
+    float: none;
+    margin: auto;
+    border: 1px solid red;
+}

@@ -2,6 +2,10 @@ body {
     background-color: black;
 }
 
+input:focus {
+    background-color: darkgrey;
+}
+
 .jumbotron {
     color: darkgrey;
     text-align: center;

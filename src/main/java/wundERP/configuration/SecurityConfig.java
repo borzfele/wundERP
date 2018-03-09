@@ -13,8 +13,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+    private final UserDetailsService userService;
+
     @Autowired
-    private UserDetailsService userService;
+    public SecurityConfig(UserDetailsService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void configureAuth(AuthenticationManagerBuilder auth) throws Exception{
@@ -26,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/public/**").permitAll()
+                .antMatchers("/**", "/login", "/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
