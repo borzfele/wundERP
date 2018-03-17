@@ -2,14 +2,13 @@ package wundERP.models;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.List;
 
 @Entity
 public class DailyAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Calendar date;
+    private Calendar openDate;
     @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
     @Column(nullable = false)
@@ -21,13 +20,22 @@ public class DailyAccount {
     private int terminalBalance;
     private String comments;
     private boolean isClosed;
+    private Calendar closeDate;
 
-    public Calendar getDate() {
-        return date;
+    public Calendar getCloseDate() {
+        return closeDate;
     }
 
-    public void setDate(Calendar date) {
-        this.date = date;
+    public void setCloseDate(Calendar closeDate) {
+        this.closeDate = closeDate;
+    }
+
+    public Calendar getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(Calendar openDate) {
+        this.openDate = openDate;
     }
 
     public User getOwner() {

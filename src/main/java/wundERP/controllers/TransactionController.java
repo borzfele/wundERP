@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wundERP.models.Transaction;
+import wundERP.models.TransactionIssue;
 import wundERP.services.DailyAccountService;
+import wundERP.services.TransactionIssueService;
 import wundERP.services.TransactionService;
 import wundERP.services.UserServiceImpl;
 
 import java.util.Calendar;
+import java.util.List;
 
 @Controller
 public class TransactionController {
@@ -19,18 +22,21 @@ public class TransactionController {
     private final UserServiceImpl userService;
     private final TransactionService transactionService;
     private final DailyAccountService dailyAccountService;
+    private final TransactionIssueService transactionIssueService;
 
     @Autowired
-    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService) {
+    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService, TransactionIssueService transactionIssueService) {
         this.userService = userService;
         this.transactionService = transactionService;
         this.dailyAccountService = dailyAccountService;
+        this.transactionIssueService = transactionIssueService;
     }
 
     @RequestMapping(value = "/add-income", method = RequestMethod.GET)
     public String renderIncomeForm(Model model) {
         model.addAttribute("newIncome", new Transaction());
         model.addAttribute("isIncome", true);
+        model.addAttribute("issueList", transactionIssueService.findAll());
         return "create-transaction";
     }
 
@@ -40,14 +46,22 @@ public class TransactionController {
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
         newIncome.setDailyAccount(dailyAccountService.getLast());
+        if (dailyAccountService.getLast().isClosed() &&
+                dailyAccountService.getLast().getCloseDate().before(newIncome.getDate())) {
+            newIncome.setAfterClose(true);
+        } else {
+            newIncome.setAfterClose(false);
+        }
         transactionService.saveTransaction(newIncome);
         return "redirect:/workspace";
     }
 
     @RequestMapping(value = "/add-expense", method = RequestMethod.GET)
     public String renderExpenseForm(Model model) {
+        List<TransactionIssue> transactionIssues = transactionIssueService.findAll();
         model.addAttribute("newExpense", new Transaction());
         model.addAttribute("isIncome", false);
+        model.addAttribute("issueList", transactionIssues);
         return "create-transaction";
     }
 
@@ -57,6 +71,12 @@ public class TransactionController {
         newExpense.setDate(Calendar.getInstance());
         newExpense.setOwner(userService.getCurrentUser());
         newExpense.setDailyAccount(dailyAccountService.getLast());
+        if (dailyAccountService.getLast().isClosed() &&
+                dailyAccountService.getLast().getCloseDate().before(newExpense.getDate())) {
+            newExpense.setAfterClose(true);
+        } else {
+            newExpense.setAfterClose(false);
+        }
         transactionService.saveTransaction(newExpense);
         return "redirect:/workspace";
     }

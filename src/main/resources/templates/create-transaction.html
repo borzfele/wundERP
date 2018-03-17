@@ -10,6 +10,10 @@
         <input type="text" th:field="*{value}"/>
         <p>description</p>
         <input type="text" th:field="*{description}"/>
+        <select class="form-control" th:field="*{issue}">
+            <option value="0" text="select operator" ></option>
+            <option th:each="issue : ${issueList}" th:value="${issue.getId()}" th:text="${issue.getIssueName()}"></option>
+        </select>
         <button type="submit">Save</button>
     </form>
 
@@ -18,6 +22,10 @@
         <input type="text" th:field="*{value}"/>
         <p>description</p>
         <input type="text" th:field="*{description}"/>
+        <select class="form-control" th:field="*{issue}">
+            <option value="0" text="select operator" ></option>
+            <option th:each="issue : ${issueList}" th:value="${issue.getId()}" th:text="${issue.getIssueName()}"></option>
+        </select>
         <button type="submit">Save</button>
     </form>
 </body>

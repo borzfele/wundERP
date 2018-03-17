@@ -13,7 +13,6 @@ import wundERP.services.DailyAccountService;
 import wundERP.services.TransactionService;
 import wundERP.services.UserServiceImpl;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Controller
@@ -41,7 +40,7 @@ public class DailyAccountController {
     public String saveDayOpen(@ModelAttribute DailyAccount dailyAccount) {
         dailyAccount.setClosed(false);
         dailyAccount.setOwner(userService.getCurrentUser());
-        dailyAccount.setDate(Calendar.getInstance());
+        dailyAccount.setOpenDate(Calendar.getInstance());
         dailyAccountService.saveDailyAccount(dailyAccount);
         return "redirect:/workspace";
     }
@@ -55,7 +54,6 @@ public class DailyAccountController {
     @RequestMapping(value = "/close-day", method = RequestMethod.POST)
     public String saveDayClose(@ModelAttribute DailyAccount dailyAccount) {
         DailyAccount lastOpened = dailyAccountService.getLast();
-
 
         lastOpened.setClosed(true);
         logger.info("flag set to closed");
@@ -73,6 +71,7 @@ public class DailyAccountController {
                 - lastOpened.getOpenCash() + sumOfDailyTransactions;
         lastOpened.setDailyBalance(dailyBalance);
         lastOpened.setComments(dailyAccount.getComments());
+        lastOpened.setCloseDate(Calendar.getInstance());
         dailyAccountService.saveDailyAccount(lastOpened);
         return "redirect:/workspace";
     }

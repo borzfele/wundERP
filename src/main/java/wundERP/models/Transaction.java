@@ -16,6 +16,26 @@ public class Transaction {
     private User owner;
     @ManyToOne(fetch = FetchType.EAGER)
     private DailyAccount dailyAccount;
+    private boolean afterClose;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="issue")
+    private TransactionIssue issue;
+
+    public TransactionIssue getIssue() {
+        return issue;
+    }
+
+    public void setIssue(TransactionIssue issue) {
+        this.issue = issue;
+    }
+
+    public boolean isAfterClose() {
+        return afterClose;
+    }
+
+    public void setAfterClose(boolean afterClose) {
+        this.afterClose = afterClose;
+    }
 
     public long getId() {
         return id;
