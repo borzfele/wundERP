@@ -8,15 +8,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import wundERP.services.DailyAccountService;
+import wundERP.services.RoleService;
+import wundERP.services.UserServiceImpl;
 
 @Controller
 public class ViewControllers {
     private final DailyAccountService dailyAccountService;
+    private final UserServiceImpl userService;
+    private final RoleService roleService;
     private static final Logger logger = LoggerFactory.getLogger(ViewControllers.class);
 
     @Autowired
-    public ViewControllers(DailyAccountService dailyAccountService) {
+    public ViewControllers(DailyAccountService dailyAccountService, UserServiceImpl userService, RoleService roleService) {
         this.dailyAccountService = dailyAccountService;
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -38,6 +44,10 @@ public class ViewControllers {
             model.addAttribute("openingPage", Boolean.TRUE);
         } else {
             model.addAttribute("openingPage", Boolean.FALSE);
+        }
+
+        if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
+            model.addAttribute("isAdmin", true);
         }
 
         logger.info("rendering workspace");
