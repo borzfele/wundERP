@@ -20,9 +20,18 @@ public class Transaction {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="issue")
     private TransactionIssue issue;
+    private boolean isBankTransaction;
 
     public TransactionIssue getIssue() {
         return issue;
+    }
+
+    public boolean isBankTransaction() {
+        return isBankTransaction;
+    }
+
+    public void setBankTransaction(boolean bankTransaction) {
+        isBankTransaction = bankTransaction;
     }
 
     public void setIssue(TransactionIssue issue) {

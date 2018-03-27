@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wundERP.models.Transaction;
 import wundERP.models.TransactionIssue;
 import wundERP.services.*;
@@ -44,7 +45,8 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/add-income", method = RequestMethod.POST)
-    public String saveIncome(@ModelAttribute Transaction newIncome) {
+    public String saveIncome(@ModelAttribute Transaction newIncome, @RequestParam(required =false, value ="isBank") String isBank) {
+        logger.info(isBank);
         newIncome.setValue(Math.abs(newIncome.getValue()));
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
@@ -54,6 +56,11 @@ public class TransactionController {
             newIncome.setAfterClose(true);
         } else {
             newIncome.setAfterClose(false);
+        }
+        if (isBank != null) {
+            newIncome.setBankTransaction(true);
+        } else {
+            newIncome.setBankTransaction(false);
         }
         transactionService.saveTransaction(newIncome);
         return "redirect:/workspace";
@@ -69,7 +76,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/add-expense", method = RequestMethod.POST)
-    public String saveExpense(@ModelAttribute Transaction newExpense) {
+    public String saveExpense(@ModelAttribute Transaction newExpense, @RequestParam(value = "isBank", required = false) String isBank) {
         newExpense.setValue(newExpense.getValue() * -1);
         newExpense.setDate(Calendar.getInstance());
         newExpense.setOwner(userService.getCurrentUser());
@@ -79,6 +86,11 @@ public class TransactionController {
             newExpense.setAfterClose(true);
         } else {
             newExpense.setAfterClose(false);
+        }
+        if (isBank != null) {
+            newExpense.setBankTransaction(true);
+        } else {
+            newExpense.setBankTransaction(false);
         }
         transactionService.saveTransaction(newExpense);
         return "redirect:/workspace";

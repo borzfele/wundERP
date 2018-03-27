@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/erp.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/erp.css}"/>
     <meta charset="UTF-8"/>
     <title>munkalap</title>
@@ -23,7 +24,7 @@
     <div class="col-xs-10">
         <div class="col-xs-5 asd" th:if="${openingPage} == true">
             <a href="/open-day">
-                <button>Open Day</button>
+                <button id="open-button">Open Day</button>
             </a>
         </div>
         <div class="col-xs-5 asd" th:if="${openingPage} == false">
@@ -55,11 +56,6 @@
             <div class="button-cont">
                 <a href="/add-expense">
                     <button> Add Expense </button>
-                </a>
-            </div>
-            <div th:if="${isAdmin}" class="button-cont">
-                <a href="/add-expense">
-                    <button> Add Bank Transiction or wtf is this </button>
                 </a>
             </div>
         </div>
