@@ -28,14 +28,15 @@
             </a>
         </div>
         <div class="col-xs-5 asd" th:if="${openingPage} == false">
-            <div id="stats">
-                Statisztikák a napról
+            <div th:text="${messages}" id="stats">
             </div>
             <div class="button-cont">
                 <div class="align-middle" id="pos-button">
-                    <span class="align-middle">
-                        Belépés a POS-be
-                    </span>
+                    <a target="_blank" href="http://erp.bazissor.hu:8069/web/database/selector">
+                        <button>
+                            Open POS
+                        </button>
+                    </a>
                 </div>
                 <div id="close-button">
                     <a href="/close-day">

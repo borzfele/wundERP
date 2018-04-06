@@ -54,8 +54,10 @@ public class TransactionController {
         newIncome.setValue(Math.abs(newIncome.getValue()));
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
-        newIncome.setDailyAccount(dailyAccountService.getLast());
-        if (dailyAccountService.getLast().isClosed() &&
+        if (dailyAccountService.getLast() != null) {
+            newIncome.setDailyAccount(dailyAccountService.getLast());
+        }
+        if (dailyAccountService.getLast()!= null && dailyAccountService.getLast().isClosed() &&
                 dailyAccountService.getLast().getCloseDate().before(newIncome.getDate())) {
             newIncome.setAfterClose(true);
         } else {

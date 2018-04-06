@@ -44,10 +44,13 @@ public class ViewControllers {
             model.addAttribute("openingPage", Boolean.TRUE);
         } else {
             model.addAttribute("openingPage", Boolean.FALSE);
-            if (!dailyAccountService.getLastClosed().getComments().equals("")) {
-                model.addAttribute("messages", dailyAccountService.getLastClosed().getComments());
-            } else {
+
+            if (dailyAccountService.getLastClosed() == null || dailyAccountService.getLastClosed().getComments().equals("")) {
+
                 model.addAttribute("messages", "Nincs üzenet tegnapról.");
+
+            } else {
+                    model.addAttribute("messages", dailyAccountService.getLastClosed().getComments());
             }
         }
 
