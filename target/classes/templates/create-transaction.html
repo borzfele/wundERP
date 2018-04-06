@@ -14,7 +14,7 @@
             <option value="0" text="select operator" ></option>
             <option th:each="issue : ${issueList}" th:value="${issue.getId()}" th:text="${issue.getIssueName()}"></option>
         </select>
-        <div>
+        <div th:if="${isAdmin} == true">
             <input type="checkbox" value="1" name="isBank"/>
             <span>Bank Transaction</span>
         </div>
@@ -30,7 +30,7 @@
             <option value="0" text="select operator" ></option>
             <option th:each="issue : ${issueList}" th:value="${issue.getId()}" th:text="${issue.getIssueName()}"></option>
         </select>
-        <div>
+        <div  th:if="${isAdmin} == true">
             <input type="checkbox" value="1" name="isBank"/>
             <span>Bank Transaction</span>
         </div>

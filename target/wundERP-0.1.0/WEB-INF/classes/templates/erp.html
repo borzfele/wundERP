@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/erp.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/erp.css}"/>
+    <meta charset="UTF-8"/>
+    <title>munkalap</title>
+</head>
+
+
+<body>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <div class="col-xs-1"></div>
+
+    <div class="col-xs-10">
+        <div class="col-xs-5 asd" th:if="${openingPage} == true">
+            <a href="/open-day">
+                <button id="open-button">Open Day</button>
+            </a>
+        </div>
+        <div class="col-xs-5 asd" th:if="${openingPage} == false">
+            <div id="stats">
+                Statisztikák a napról
+            </div>
+            <div class="button-cont">
+                <div class="align-middle" id="pos-button">
+                    <span class="align-middle">
+                        Belépés a POS-be
+                    </span>
+                </div>
+                <div id="close-button">
+                    <a href="/close-day">
+                        <button> Close </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2"></div>
+
+        <div class="col-xs-5 asd">
+            <div class="button-cont">
+                <a href="/add-income">
+                    <button> Add Income </button>
+                </a>
+            </div>
+            <div class="button-cont">
+                <a href="/add-expense">
+                    <button> Add Expense </button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-1"></div>
+
+</body>
+</html>

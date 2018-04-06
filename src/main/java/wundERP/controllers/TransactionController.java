@@ -41,6 +41,10 @@ public class TransactionController {
         model.addAttribute("isIncome", true);
         model.addAttribute("issueList", transactionIssueService.findAll());
 
+        if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
+            model.addAttribute("isAdmin", true);
+        }
+
         return "create-transaction";
     }
 

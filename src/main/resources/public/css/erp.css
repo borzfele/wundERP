@@ -1,8 +1,13 @@
+body {
+    background: url("/images/dante.jpg") no-repeat top ;
+}
 
+#open-form-cont {
+    display: none;
+}
 
 .asd {
     height: 50vh;
-    background-color: darkgrey;
     margin: auto;
     position: relative;
     top: 20vh;
@@ -46,6 +51,7 @@ div button {
     height: 48%;
     margin-top: 1%;
     margin-bottom: 1%;
+    background-color: white;
 }
 
 .container {

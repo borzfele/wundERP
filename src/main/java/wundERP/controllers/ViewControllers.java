@@ -28,7 +28,7 @@ public class ViewControllers {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderHome() {
         logger.info("rendering homepage");
-        return "redirect:/login";
+        return "redirect:/workspace";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -44,13 +44,17 @@ public class ViewControllers {
             model.addAttribute("openingPage", Boolean.TRUE);
         } else {
             model.addAttribute("openingPage", Boolean.FALSE);
+            if (!dailyAccountService.getLastClosed().getComments().equals("")) {
+                model.addAttribute("messages", dailyAccountService.getLastClosed().getComments());
+            } else {
+                model.addAttribute("messages", "Nincs üzenet tegnapról.");
+            }
         }
 
         if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
             model.addAttribute("isAdmin", true);
         }
 
-        logger.info("rendering workspace");
         return "erp";
     }
 }

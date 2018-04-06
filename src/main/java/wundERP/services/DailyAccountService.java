@@ -33,4 +33,12 @@ public class DailyAccountService {
 
     }
 
+    public DailyAccount getLastClosed() {
+        if (getLast().isClosed()) {
+            return getLast();
+        } else {
+            return dailyAccountRepository.findById(getLast().getId() - 1);
+        }
+    }
+
 }
