@@ -23,6 +23,13 @@ function main() {
         $("#close-form-cont").show();
     });
 
+    $("#cancel-close").on("click", function () {
+        $("#close-button").show();
+        $("#stats").show();
+        $("#pos-button-cont").show();
+        $("#close-form-cont").hide();
+    });
+
     $("#cancel-open").on("click", function () {
         $("#open-form-cont").hide();
         $("#open-button").show();
@@ -43,9 +50,25 @@ function main() {
         $.get("/get-issues", function(response, status){
             populateSelectWithOptions($("#issue"), response.transactionIssues);
         });
+    });
 
+    $("#cancel-income").on("click", function () {
+        $("#income-form-cont").hide();
+        $(".button-cont").show();
+    });
 
+    $("#add-expense").on("click", function () {
+        $("#expense-issue").prop('disabled', true);
+        $(".button-cont").hide();
+        $("#expense-form-cont").show();
+        $.get("/get-issues", function(response, status){
+            populateSelectWithOptions($("#expense-issue"), response.transactionIssues);
+        });
+    });
 
+    $("#cancel-expense").on("click", function () {
+        $("#expense-form-cont").hide();
+        $(".button-cont").show();
     });
 
     $("#close-form").on("submit", function (e) {
@@ -61,6 +84,7 @@ function main() {
             alert("Valamelyik összeg üres, vagy nem szám.");
         }
     });
+
 }
 
 $(document).ready(function () {

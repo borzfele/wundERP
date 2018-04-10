@@ -12,6 +12,11 @@ body {
     background-color: darkgrey;
 }
 
+#expense-form-cont {
+    display: none;
+    background-color: darkgrey;
+}
+
 #close-form-cont {
     display: none;
     background-color: darkgrey;

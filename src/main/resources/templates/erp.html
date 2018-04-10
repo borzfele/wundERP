@@ -48,7 +48,7 @@
                     <input id="comments" type="text" name="comments"/>
                     <button type="submit">Save</button>
                 </form>
-                <button>Cancel</button>
+                <button id="cancel-close">Cancel</button>
             </div>
             <div th:text="${messages}" id="stats">
             </div>
@@ -87,11 +87,27 @@
                     </div>
                     <button type="submit">Save</button>
                 </form>
+                <button id="cancel-income">Cancel</button>
             </div>
             <div class="button-cont">
-                <a href="/add-expense">
-                    <button> Add Expense </button>
-                </a>
+                <button id="add-expense">Add Expense</button>
+            </div>
+            <div id="expense-form-cont">
+                <form th:action="@{/add-expense}" method="post">
+                    <p>value</p>
+                    <input type="text" name="value"/>
+                    <p>description</p>
+                    <input type="text" name="description"/>
+                    <select id="expense-issue" class="form-control" name="issue">
+                        <option value="0" text="select operator" ></option>
+                    </select>
+                    <div  th:if="${isAdmin} == true">
+                        <input type="checkbox" value="1" name="isBank"/>
+                        <span>Bank Transaction</span>
+                    </div>
+                    <button type="submit">Save</button>
+                </form>
+                <button id="cancel-expense">Cancel</button>
             </div>
         </div>
 

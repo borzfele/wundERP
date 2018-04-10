@@ -35,25 +35,16 @@ public class TransactionController {
         this.roleService = roleService;
     }
 
-    @RequestMapping(value = "/add-income", method = RequestMethod.GET)
-    public String renderIncomeForm(Model model) {
-        model.addAttribute("newIncome", new Transaction());
-        model.addAttribute("isIncome", true);
-        model.addAttribute("issueList", transactionIssueService.findAll());
-
-        if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
-            model.addAttribute("isAdmin", true);
-        }
-
-        return "create-transaction";
-    }
-
     @RequestMapping(value = "/add-income", method = RequestMethod.POST)
-    public String saveIncome(@RequestParam String value, @RequestParam String description, @RequestParam(required =false, value ="isBank") String isBank, @RequestParam String issue) {
+    public String saveIncome(@RequestParam String value,
+                             @RequestParam String description,
+                             @RequestParam(required =false, value ="isBank") String isBank,
+                             @RequestParam String issue) {
 
         Transaction newIncome = new Transaction();
 
-        newIncome.setValue(Math.abs(newIncome.getValue()));
+        newIncome.setValue(Math.abs(Integer.valueOf(value)));
+        newIncome.setDescription(description);
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
         if (dailyAccountService.getLast() != null) {
@@ -75,18 +66,14 @@ public class TransactionController {
         return "redirect:/workspace";
     }
 
-    @RequestMapping(value = "/add-expense", method = RequestMethod.GET)
-    public String renderExpenseForm(Model model) {
-        List<TransactionIssue> transactionIssues = transactionIssueService.findAll();
-        model.addAttribute("newExpense", new Transaction());
-        model.addAttribute("isIncome", false);
-        model.addAttribute("issueList", transactionIssues);
-        return "create-transaction";
-    }
-
     @RequestMapping(value = "/add-expense", method = RequestMethod.POST)
-    public String saveExpense(@ModelAttribute Transaction newExpense, @RequestParam(value = "isBank", required = false) String isBank) {
-        newExpense.setValue(newExpense.getValue() * -1);
+    public String saveExpense(@RequestParam(value = "isBank", required = false) String isBank,
+                              @RequestParam String value,
+                              @RequestParam String description,
+                              @RequestParam String issue) {
+        Transaction newExpense = new Transaction();
+        newExpense.setValue(Integer.valueOf(value) * -1);
+        newExpense.setDescription(description);
         newExpense.setDate(Calendar.getInstance());
         newExpense.setOwner(userService.getCurrentUser());
         newExpense.setDailyAccount(dailyAccountService.getLast());
@@ -101,6 +88,7 @@ public class TransactionController {
         } else {
             newExpense.setBankTransaction(false);
         }
+        newExpense.setIssue(transactionIssueService.findByIssueName(issue));
         transactionService.saveTransaction(newExpense);
         return "redirect:/workspace";
     }
