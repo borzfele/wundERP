@@ -22,15 +22,37 @@
     <div class="col-xs-1"></div>
 
     <div class="col-xs-10">
-        <div class="col-xs-5 asd" th:if="${openingPage} == true">
-            <a href="/open-day">
-                <button id="open-button">Open Day</button>
-            </a>
+        <div class="col-xs-5 clickthis" th:if="${openingPage} == true">
+            <button id="open-button">Open Day</button>
+            <div id="open-form-cont">
+                <form id="open-form" th:action="@{/open-day}" method="post">
+                    <label for="open-cash">Open Cash</label>
+                    <input id="open-cash" type="text" name="openCash"/>
+                    <button id="open-submit" type="submit">Save</button>
+                </form>
+                <button id="cancel-open">Cancel</button>
+            </div>
         </div>
-        <div class="col-xs-5 asd" th:if="${openingPage} == false">
+        <div class="col-xs-5 clickthis" th:if="${openingPage} == false">
+            <div id="close-form-cont">
+                <form id="close-form" th:action="@{/close-day}" method="post">
+                    <p>záró kp</p>
+                    <input id="closeCash" type="text" name="closeCash"/>
+                    <p>terminál forgalom</p>
+                    <input id="terminalBalance" type="text" name="terminalBalance"/>
+                    <p>kassza forgalom</p>
+                    <input id="cassaBalance" type="text" name="cassaBalance"/>
+                    <p>pos forgalom</p>
+                    <input id="posBalance" type="text" name="posBalance"/>
+                    <p>megjegyzések</p>
+                    <input id="comments" type="text" name="comments"/>
+                    <button type="submit">Save</button>
+                </form>
+                <button>Cancel</button>
+            </div>
             <div th:text="${messages}" id="stats">
             </div>
-            <div class="button-cont">
+            <div class="button-cont" id="pos-button-cont">
                 <div class="align-middle" id="pos-button">
                     <a target="_blank" href="http://erp.bazissor.hu:8069/web/database/selector">
                         <button>
@@ -39,20 +61,32 @@
                     </a>
                 </div>
                 <div id="close-button">
-                    <a href="/close-day">
-                        <button> Close </button>
-                    </a>
+                    <button> Close </button>
                 </div>
             </div>
         </div>
 
         <div class="col-xs-2"></div>
 
-        <div class="col-xs-5 asd">
+        <div class="col-xs-5 clickthis">
             <div class="button-cont">
-                <a href="/add-income">
-                    <button> Add Income </button>
-                </a>
+                <button id="add-income"> Add Income </button>
+            </div>
+            <div id="income-form-cont">
+                <form id="income-form" th:action="@{/add-income}" method="post">
+                    <p>value</p>
+                    <input type="text" name="value"/>
+                    <p>description</p>
+                    <input type="text" name="description"/>
+                    <select id="issue" class="form-control" name="issue">
+                        <option value="0" text="select operator" ></option>
+                    </select>
+                    <div th:if="${isAdmin} == true">
+                        <input type="checkbox" value="1" name="isBank"/>
+                        <span>Bank Transaction</span>
+                    </div>
+                    <button type="submit">Save</button>
+                </form>
             </div>
             <div class="button-cont">
                 <a href="/add-expense">

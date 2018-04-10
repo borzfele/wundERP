@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import wundERP.models.DailyAccount;
 import wundERP.services.DailyAccountService;
 import wundERP.services.TransactionService;
@@ -30,47 +31,36 @@ public class DailyAccountController {
         this.transactionService = transactionService;
     }
 
-    @RequestMapping(value = "/open-day", method = RequestMethod.GET)
-    public String renderDayOpen(Model model) {
-        model.addAttribute("dailyAccount", new DailyAccount());
-        return "day-open-form";
-    }
-
     @RequestMapping(value = "/open-day", method = RequestMethod.POST)
-    public String saveDayOpen(@ModelAttribute DailyAccount dailyAccount) {
+    public String saveDayOpen(@RequestParam String openCash) {
+        DailyAccount dailyAccount = new DailyAccount();
         dailyAccount.setClosed(false);
         dailyAccount.setOwner(userService.getCurrentUser());
         dailyAccount.setOpenDate(Calendar.getInstance());
+        dailyAccount.setOpenCash(Integer.valueOf(openCash));
         dailyAccountService.saveDailyAccount(dailyAccount);
         return "redirect:/workspace";
     }
 
-    @RequestMapping(value = "/close-day", method = RequestMethod.GET)
-    public String renderDayClose(Model model) {
-        model.addAttribute("openedDailyAccount", new DailyAccount());
-        return "day-close-form";
-    }
-
     @RequestMapping(value = "/close-day", method = RequestMethod.POST)
-    public String saveDayClose(@ModelAttribute DailyAccount dailyAccount) {
+    public String saveDayClose(@RequestParam String closeCash,
+                               @RequestParam String terminalBalance,
+                               @RequestParam String cassaBalance,
+                               @RequestParam String posBalance,
+                               @RequestParam String comments) {
         DailyAccount lastOpened = dailyAccountService.getLast();
 
+        lastOpened.setCloseCash(Integer.valueOf(closeCash));
+        lastOpened.setTerminalBalance(Integer.valueOf(terminalBalance));
+        lastOpened.setCassaBalance(Integer.valueOf(cassaBalance));
+        lastOpened.setPosBalance(Integer.valueOf(posBalance));
+        lastOpened.setComments(comments);
         lastOpened.setClosed(true);
-        logger.info("flag set to closed");
-        lastOpened.setCassaBalance(dailyAccount.getCassaBalance());
-        logger.info("cassa balance set");
-        lastOpened.setCloseCash(dailyAccount.getCloseCash());
-        logger.info("close cash set");
-        lastOpened.setTerminalBalance(dailyAccount.getTerminalBalance());
-        logger.info("terminal balance set");
-        lastOpened.setPosBalance(dailyAccount.getPosBalance());
-        logger.info("posbalance set");
         int sumOfDailyTransactions = transactionService.getSumOf(transactionService.findAllByDailyAccount(dailyAccountService.findById(lastOpened.getId())));
         int dailyBalance = lastOpened.getCloseCash()
                 + lastOpened.getTerminalBalance()
                 - lastOpened.getOpenCash() + sumOfDailyTransactions;
         lastOpened.setDailyBalance(dailyBalance);
-        lastOpened.setComments(dailyAccount.getComments());
         lastOpened.setCloseDate(Calendar.getInstance());
         dailyAccountService.saveDailyAccount(lastOpened);
         return "redirect:/workspace";

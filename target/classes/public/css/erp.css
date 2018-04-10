@@ -4,9 +4,20 @@ body {
 
 #open-form-cont {
     display: none;
+    background-color: darkgrey;
 }
 
-.asd {
+#income-form-cont {
+    display: none;
+    background-color: darkgrey;
+}
+
+#close-form-cont {
+    display: none;
+    background-color: darkgrey;
+}
+
+.clickthis {
     height: 50vh;
     margin: auto;
     position: relative;

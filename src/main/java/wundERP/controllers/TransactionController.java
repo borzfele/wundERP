@@ -49,8 +49,10 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "/add-income", method = RequestMethod.POST)
-    public String saveIncome(@ModelAttribute Transaction newIncome, @RequestParam(required =false, value ="isBank") String isBank) {
-        logger.info(isBank);
+    public String saveIncome(@RequestParam String value, @RequestParam String description, @RequestParam(required =false, value ="isBank") String isBank, @RequestParam String issue) {
+
+        Transaction newIncome = new Transaction();
+
         newIncome.setValue(Math.abs(newIncome.getValue()));
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
@@ -68,6 +70,7 @@ public class TransactionController {
         } else {
             newIncome.setBankTransaction(false);
         }
+        newIncome.setIssue(transactionIssueService.findByIssueName(issue));
         transactionService.saveTransaction(newIncome);
         return "redirect:/workspace";
     }

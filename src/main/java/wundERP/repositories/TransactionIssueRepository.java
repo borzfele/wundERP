@@ -10,4 +10,6 @@ public interface TransactionIssueRepository extends JpaRepository<TransactionIss
 
     List<TransactionIssue> findAll();
 
+    TransactionIssue findByIssueName(String transactionIssueName);
+
 }

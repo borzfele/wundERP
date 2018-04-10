@@ -21,4 +21,8 @@ public class TransactionIssueService {
         return transactionIssueRepository.findAll();
     }
 
+    public TransactionIssue findByIssueName(String issueName) {
+        return transactionIssueRepository.findByIssueName(issueName);
+    }
+
 }
