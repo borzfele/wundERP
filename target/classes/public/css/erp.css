@@ -4,22 +4,73 @@ body {
 
 #open-form-cont {
     display: none;
-    background-color: darkgrey;
+    background-color: rgba(221,221,221,0.8);
+}
+
+#open-form label {
+    width: 50%;
+}
+
+#open-form input {
+    width: 49%;
 }
 
 #income-form-cont {
     display: none;
-    background-color: darkgrey;
+    background-color: rgba(221,221,221,0.8);
+}
+
+#income-form input {
+    width: 49%;
+}
+
+#income-form label {
+    width: 50%;
+}
+
+#income-form select {
+    display: inline-block;
+    width: 49%;
 }
 
 #expense-form-cont {
     display: none;
-    background-color: darkgrey;
+    background-color: rgba(221,221,221,0.8);
+}
+
+#expense-form label {
+    width: 50%;
+}
+
+#expense-form input {
+    width: 49%;
+}
+
+#expense-form select {
+    width: 49%;
+    display: inline-block;
 }
 
 #close-form-cont {
     display: none;
-    background-color: darkgrey;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+#close-form {
+    background-color: rgba(211,211,211,0.8);
+}
+
+#close-form label {
+    width: 50%;
+}
+
+#close-form input {
+    width: 49%;
+}
+
+#close-form textarea {
+    width: 100%;
 }
 
 .clickthis {

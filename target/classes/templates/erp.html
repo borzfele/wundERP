@@ -10,7 +10,7 @@
     <script src="/js/erp.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/erp.css}"/>
     <meta charset="UTF-8"/>
-    <title>munkalap</title>
+    <title>WündERP</title>
 </head>
 
 
@@ -23,11 +23,13 @@
 
     <div class="col-xs-10">
         <div class="col-xs-5 clickthis" th:if="${openingPage} == true">
-            <button id="open-button">Open Day</button>
+                <button id="open-button">Open Day</button>
             <div id="open-form-cont">
                 <form id="open-form" th:action="@{/open-day}" method="post">
-                    <label for="open-cash">Open Cash</label>
-                    <input id="open-cash" type="text" name="openCash"/>
+                    <div id="open-input-cont">
+                        <label for="open-cash">Open Cash</label>
+                        <input id="open-cash" type="text" name="openCash"/>
+                    </div>
                     <button id="open-submit" type="submit">Save</button>
                 </form>
                 <button id="cancel-open">Cancel</button>
@@ -36,19 +38,32 @@
         <div class="col-xs-5 clickthis" th:if="${openingPage} == false">
             <div id="close-form-cont">
                 <form id="close-form" th:action="@{/close-day}" method="post">
-                    <p>záró kp</p>
-                    <input id="closeCash" type="text" name="closeCash"/>
-                    <p>terminál forgalom</p>
-                    <input id="terminalBalance" type="text" name="terminalBalance"/>
-                    <p>kassza forgalom</p>
-                    <input id="cassaBalance" type="text" name="cassaBalance"/>
-                    <p>pos forgalom</p>
-                    <input id="posBalance" type="text" name="posBalance"/>
-                    <p>megjegyzések</p>
-                    <input id="comments" type="text" name="comments"/>
-                    <button type="submit">Save</button>
+                    <div id="close-input-cont">
+                        <div>
+                            <label for="close-cash">Close cash</label>
+                            <input id="close-cash" type="text" name="closeCash"/>
+                        </div>
+                        <div>
+                            <label for="terminal-balance">Terminal balance</label>
+                            <input id="terminal-balance" type="text" name="terminalBalance"/>
+                        </div>
+                        <div>
+                            <label for="cassa-balance">Cassa balance</label>
+                            <input id="cassa-balance" type="text" name="cassaBalance"/>
+                        </div>
+                        <div>
+                            <label for="pos-balance">POS balance</label>
+                            <input id="pos-balance" type="text" name="posBalance"/>
+                        </div>
+                    </div>
+                    <div id="close-textarea-cont">
+                        <textarea placeholder="Comments, messages" id="comments" type="text" name="comments"></textarea>
+                    </div>
+                    <div id="close-button-cont">
+                        <button id="submit-close" type="submit">Save</button>
+                        <button type="button" id="cancel-close">Cancel</button>
+                    </div>
                 </form>
-                <button id="cancel-close">Cancel</button>
             </div>
             <div th:text="${messages}" id="stats">
             </div>
@@ -74,36 +89,50 @@
             </div>
             <div id="income-form-cont">
                 <form id="income-form" th:action="@{/add-income}" method="post">
-                    <p>value</p>
-                    <input type="text" name="value"/>
-                    <p>description</p>
-                    <input type="text" name="description"/>
-                    <select id="issue" class="form-control" name="issue">
-                        <option value="0" text="select operator" ></option>
-                    </select>
+                    <div>
+                        <label for="income-value">Value</label>
+                        <input id="income-value" type="text" name="value"/>
+                    </div>
+                    <div>
+                        <label for="income-description">Description</label>
+                        <input id="income-description" type="text" name="description"/>
+                    </div>
+                    <div>
+                        <label for="issue">Transaction Issue</label>
+                        <select id="issue" class="form-control" name="issue">
+                            <option value="0" text="select operator" ></option>
+                        </select>
+                    </div>
                     <div th:if="${isAdmin} == true">
-                        <input type="checkbox" value="1" name="isBank"/>
-                        <span>Bank Transaction</span>
+                        <input id="bank" type="checkbox" value="1" name="isBank"/>
+                        <label for="bank">Bank Transaction</label>
                     </div>
                     <button type="submit">Save</button>
+                    <button type="button" id="cancel-income">Cancel</button>
                 </form>
-                <button id="cancel-income">Cancel</button>
             </div>
             <div class="button-cont">
                 <button id="add-expense">Add Expense</button>
             </div>
             <div id="expense-form-cont">
-                <form th:action="@{/add-expense}" method="post">
-                    <p>value</p>
-                    <input type="text" name="value"/>
-                    <p>description</p>
-                    <input type="text" name="description"/>
-                    <select id="expense-issue" class="form-control" name="issue">
-                        <option value="0" text="select operator" ></option>
-                    </select>
+                <form id="expense-form" th:action="@{/add-expense}" method="post">
+                    <div>
+                        <label for="expense-value">Value</label>
+                        <input id="expense-value" type="text" name="value"/>
+                    </div>
+                    <div>
+                        <label for="expense-description">Description</label>
+                        <input id="expense-description" type="text" name="description"/>
+                    </div>
+                    <div>
+                        <label for="expense-issue">Transaction Issue</label>
+                        <select id="expense-issue" class="form-control" name="issue">
+                            <option value="0" text="select operator" ></option>
+                        </select>
+                    </div>
                     <div  th:if="${isAdmin} == true">
-                        <input type="checkbox" value="1" name="isBank"/>
-                        <span>Bank Transaction</span>
+                        <input id="expense-bank" type="checkbox" value="1" name="isBank"/>
+                        <label for="expense-bank">Bank Transaction</label>
                     </div>
                     <button type="submit">Save</button>
                 </form>
