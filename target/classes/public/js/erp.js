@@ -93,6 +93,24 @@ function main() {
         }
     });
 
+    $('#income-form').on("submit", function (e) {
+        let incomeValue = $("#income-value").val();
+
+        if (!isFinite(incomeValue) || incomeValue === "") {
+            e.preventDefault();
+            alert("Hiányzó összeg, vagy nem szám.");
+        }
+    });
+
+    $('#expense-form').on("submit", function (e) {
+        let expenseValue = $("#expense-value").val();
+
+        if (!isFinite(expenseValue) || expenseValue === "") {
+            e.preventDefault();
+            alert("Hiányzó összeg, vagy nem szám.");
+        }
+    });
+
 }
 
 $(document).ready(function () {
