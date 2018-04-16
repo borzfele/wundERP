@@ -43,9 +43,10 @@ public class ViewControllers {
         if (dailyAccountService.getLast() == null || dailyAccountService.getLast().isClosed()) {
             model.addAttribute("openingPage", Boolean.TRUE);
         } else {
+
             model.addAttribute("openingPage", Boolean.FALSE);
 
-            if (dailyAccountService.getLastClosed() == null || dailyAccountService.getLastClosed().getComments().equals("")) {
+            if (!dailyAccountService.getLast().isClosed() || dailyAccountService.getLastClosed().getComments().equals("")) {
 
                 model.addAttribute("messages", "Nincs üzenet tegnapról.");
 

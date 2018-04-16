@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import wundERP.models.Transaction;
 import wundERP.models.TransactionIssue;
 import wundERP.services.*;
@@ -71,13 +68,17 @@ public class TransactionController {
                               @RequestParam String value,
                               @RequestParam String description,
                               @RequestParam String issue) {
+
         Transaction newExpense = new Transaction();
-        newExpense.setValue(Integer.valueOf(value) * -1);
+
+        newExpense.setValue(Math.abs(Integer.valueOf(value)) * -1);
         newExpense.setDescription(description);
         newExpense.setDate(Calendar.getInstance());
         newExpense.setOwner(userService.getCurrentUser());
-        newExpense.setDailyAccount(dailyAccountService.getLast());
-        if (dailyAccountService.getLast().isClosed() &&
+        if (dailyAccountService.getLast() != null) {
+            newExpense.setDailyAccount(dailyAccountService.getLast());
+        }
+        if (dailyAccountService.getLast()!= null && dailyAccountService.getLast().isClosed() &&
                 dailyAccountService.getLast().getCloseDate().before(newExpense.getDate())) {
             newExpense.setAfterClose(true);
         } else {

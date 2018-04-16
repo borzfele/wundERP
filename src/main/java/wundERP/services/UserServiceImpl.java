@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import wundERP.models.Role;
 import wundERP.models.User;
@@ -38,12 +39,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User user = findByName(name);
 
+
         if (user == null) {
             logger.info("There's no user with name: " + name);
             throw new UsernameNotFoundException(name);
         }
 
-        logger.info("returning UserDetailsImpl with name: " + user.getName() +" and role: " + user.getRoles().toString());
+        logger.info("returning UserDetailsImpl with name: " + user.getName() + " password: " + user.getPassword() +" and role: " + user.getRoles().toString());
         return new UserDetailsImpl(user);
     }
 
@@ -55,6 +57,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         return userRepository.findByName(username);
+    }
+
+    public User findById(long id) {
+        return userRepository.findById(id);
     }
 
 }

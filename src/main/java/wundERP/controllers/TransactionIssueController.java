@@ -25,7 +25,6 @@ public class TransactionIssueController {
     @GetMapping("/get-issues")
     public ResponseEntity<?> getIssues() {
 
-        Gson gson = new Gson();
         TransactionIssueResponseBody result = new TransactionIssueResponseBody();
 
         List<String> transactionIssues = new ArrayList<>();

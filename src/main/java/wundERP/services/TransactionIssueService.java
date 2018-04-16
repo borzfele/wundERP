@@ -17,6 +17,10 @@ public class TransactionIssueService {
         this.transactionIssueRepository = transactionIssueRepository;
     }
 
+    public void saveTransactionIssue(TransactionIssue transactionIssue) {
+        transactionIssueRepository.save(transactionIssue);
+    }
+
     public List<TransactionIssue> findAll() {
         return transactionIssueRepository.findAll();
     }

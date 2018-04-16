@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/erp.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/erp.css}"/>
+    <meta charset="UTF-8"/>
+    <title>WündERP</title>
+</head>
+
+
+<body>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <div class="col-xs-1"></div>
+
+    <div class="col-xs-10">
+        <div class="col-xs-5 clickthis" th:if="${openingPage} == true">
+                <button id="open-button">Open Day</button>
+            <div id="open-form-cont">
+                <form id="open-form" th:action="@{/open-day}" method="post">
+                    <div id="open-input-cont">
+                        <!--
+                        <label for="five">5 x </label>
+                        <input id="five" type="text" name="five"/>
+                        <label for="ten">10 x </label>
+                        <input id="ten" type="text" name="ten"/>
+                        <label for="twenty">20 x </label>
+                        <input id="twenty" type="text" name="twenty"/>
+                        <label for="fifty">50 x </label>
+                        <input id="fifty" type="text" name="fifty"/>
+                        <label for="hundred">100 x </label>
+                        <input id="hundred" type="text" name="hundred"/>
+                        <label for="twohundred">200 x </label>
+                        <input id="twohundred" type="text" name="twohundred"/>
+                        <label for="fivehundred">500 x </label>
+                        <input id="fivehundred" type="text" name="fivehundred"/>
+                        <label for="thousand">1000 x </label>
+                        <input id="thousand" type="text" name="thousand"/>
+                        <label for="twothousand">2000 x </label>
+                        <input id="twothousand" type="text" name="twothousand"/>
+                        <label for="fivethousand">5000 x </label>
+                        <input id="fivethousand" type="text" name="fivethousand"/>
+                        <label for="tenthousand">10000 x </label>
+                        <input id="tenthousand" type="text" name="tenthousand"/>
+                        <label for="twentythousand">20000 x </label>
+                        <input id="twentythousand" type="text" name="twentythousand"/>
+                        -->
+                        <label for="open-cash">Open cash</label>
+                        <input id="open-cash" name="openCash" type="text"/>
+                    </div>
+                    <button id="open-submit" type="submit">Save</button>
+                </form>
+                <button id="cancel-open">Cancel</button>
+            </div>
+        </div>
+        <div class="col-xs-5 clickthis" th:if="${openingPage} == false">
+            <div id="close-form-cont">
+                <form id="close-form" th:action="@{/close-day}" method="post">
+                    <div id="close-input-cont">
+                        <div>
+                            <label for="close-cash">Close cash</label>
+                            <input id="close-cash" type="text" name="closeCash"/>
+                        </div>
+                        <div>
+                            <label for="terminal-balance">Terminal balance</label>
+                            <input id="terminal-balance" type="text" name="terminalBalance"/>
+                        </div>
+                        <div>
+                            <label for="cassa-balance">Cassa balance</label>
+                            <input id="cassa-balance" type="text" name="cassaBalance"/>
+                        </div>
+                        <div>
+                            <label for="pos-balance">POS balance</label>
+                            <input id="pos-balance" type="text" name="posBalance"/>
+                        </div>
+                    </div>
+                    <div id="close-textarea-cont">
+                        <textarea placeholder="Comments, messages" id="comments" type="text" name="comments"></textarea>
+                    </div>
+                    <div id="close-button-cont">
+                        <button id="submit-close" type="submit">Save</button>
+                        <button type="button" id="cancel-close">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div th:text="${messages}" id="stats">
+            </div>
+            <div class="button-cont" id="pos-button-cont">
+                <div class="align-middle" id="pos-button">
+                    <a target="_blank" href="http://erp.bazissor.hu:8069/web/database/selector">
+                        <button>
+                            Open POS
+                        </button>
+                    </a>
+                </div>
+                <div id="close-button">
+                    <button> Close </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2"></div>
+
+        <div class="col-xs-5 clickthis">
+            <div class="button-cont">
+                <button id="add-income"> Add Income </button>
+            </div>
+            <div id="income-form-cont">
+                <form id="income-form" th:action="@{/add-income}" method="post">
+                    <div>
+                        <label for="income-value">Value</label>
+                        <input id="income-value" type="text" name="value"/>
+                    </div>
+                    <div>
+                        <label for="income-description">Description</label>
+                        <input id="income-description" type="text" name="description"/>
+                    </div>
+                    <div>
+                        <label for="issue">Transaction Issue</label>
+                        <select id="issue" class="form-control" name="issue">
+                            <option value="0" text="select operator" ></option>
+                        </select>
+                    </div>
+                    <div th:if="${isAdmin} == true">
+                        <input id="bank" type="checkbox" value="1" name="isBank"/>
+                        <label for="bank">Bank Transaction</label>
+                    </div>
+                    <button type="submit">Save</button>
+                    <button type="button" id="cancel-income">Cancel</button>
+                </form>
+            </div>
+            <div class="button-cont">
+                <button id="add-expense">Add Expense</button>
+            </div>
+            <div id="expense-form-cont">
+                <form id="expense-form" th:action="@{/add-expense}" method="post">
+                    <div>
+                        <label for="expense-value">Value</label>
+                        <input id="expense-value" type="text" name="value"/>
+                    </div>
+                    <div>
+                        <label for="expense-description">Description</label>
+                        <input id="expense-description" type="text" name="description"/>
+                    </div>
+                    <div>
+                        <label for="expense-issue">Transaction Issue</label>
+                        <select id="expense-issue" class="form-control" name="issue">
+                            <option value="0" text="select operator" ></option>
+                        </select>
+                    </div>
+                    <div  th:if="${isAdmin} == true">
+                        <input id="expense-bank" type="checkbox" value="1" name="isBank"/>
+                        <label for="expense-bank">Bank Transaction</label>
+                    </div>
+                    <button type="submit">Save</button>
+                </form>
+                <button id="cancel-expense">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-1"></div>
+
+</body>
+</html>

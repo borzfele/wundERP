@@ -12,12 +12,12 @@ public class Transaction {
     private Calendar date;
     private String description;
     private int value;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User owner;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private DailyAccount dailyAccount;
     private boolean afterClose;
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="issue")
     private TransactionIssue issue;
     private boolean isBankTransaction;

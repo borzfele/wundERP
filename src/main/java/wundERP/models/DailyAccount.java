@@ -2,6 +2,7 @@ package wundERP.models;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class DailyAccount {
@@ -9,7 +10,7 @@ public class DailyAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Calendar openDate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User owner;
     @Column(nullable = false)
     private int openCash;
@@ -21,6 +22,8 @@ public class DailyAccount {
     private String comments;
     private boolean isClosed;
     private Calendar closeDate;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dailyAccount")
+    private List<Transaction> transactions;
 
     public Calendar getCloseDate() {
         return closeDate;
@@ -116,5 +119,13 @@ public class DailyAccount {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
