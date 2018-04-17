@@ -27,13 +27,11 @@ public class ViewControllers {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderHome() {
-        logger.info("rendering homepage");
         return "redirect:/workspace";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String renderLogin() {
-        logger.info("rendering login page");
         return "authorization/login";
     }
 
@@ -46,19 +44,19 @@ public class ViewControllers {
 
             model.addAttribute("openingPage", Boolean.FALSE);
 
-            if (!dailyAccountService.getLast().isClosed() || dailyAccountService.getLastClosed().getComments().equals("")) {
-
-                model.addAttribute("messages", "Nincs üzenet tegnapról.");
-
+            if (dailyAccountService.getLast() == null || dailyAccountService.getLastClosed() == null) {
+                model.addAttribute("messages", "Nincs tegnapról üzenet.");
+            } else if (dailyAccountService.getLastClosed().getComments().equals("")) {
+                model.addAttribute("messages", "Nincs tegnapról üzenet.");
             } else {
-                    model.addAttribute("messages", dailyAccountService.getLastClosed().getComments());
+                model.addAttribute("messages", dailyAccountService.getLastClosed().getComments());
             }
-        }
 
-        if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
-            model.addAttribute("isAdmin", true);
-        }
+            if (userService.getCurrentUser().getRoles().contains(roleService.findByName("admin"))) {
+                model.addAttribute("isAdmin", true);
+            }
 
+        }
         return "erp";
     }
 }

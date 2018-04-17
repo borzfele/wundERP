@@ -9,10 +9,18 @@ body {
 
 #open-form label {
     width: 50%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #open-form input {
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
+}
+
+#open-form-cont button {
+    height: 15vh;
 }
 
 #income-form-cont {
@@ -22,15 +30,25 @@ body {
 
 #income-form input {
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #income-form label {
     width: 50%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #income-form select {
     display: inline-block;
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
+}
+
+#income-form-cont button {
+    height: 15vh;
 }
 
 #expense-form-cont {
@@ -40,15 +58,25 @@ body {
 
 #expense-form label {
     width: 50%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #expense-form input {
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #expense-form select {
     width: 49%;
     display: inline-block;
+    height: 5vh;
+    font-size: 3vh;
+}
+
+#expense-form-cont button {
+    height: 15vh;
 }
 
 #close-form-cont {
@@ -63,14 +91,22 @@ body {
 
 #close-form label {
     width: 50%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #close-form input {
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #close-form textarea {
     width: 100%;
+}
+
+#close-form-cont button {
+    height: 15vh;
 }
 
 .clickthis {

@@ -91,14 +91,22 @@ body {
 
 #close-form label {
     width: 50%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #close-form input {
     width: 49%;
+    height: 5vh;
+    font-size: 3vh;
 }
 
 #close-form textarea {
     width: 100%;
+}
+
+#close-form-cont button {
+    height: 15vh;
 }
 
 .clickthis {

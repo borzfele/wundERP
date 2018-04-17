@@ -1,5 +1,4 @@
 wundERP/repositories/DailyAccountRepository.class
-wundERP/util/DBPopulator.class
 wundERP/services/DailyAccountService.class
 wundERP/repositories/UserRepository.class
 wundERP/models/User.class

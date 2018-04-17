@@ -28,7 +28,6 @@ public class UserDetailsImpl implements UserDetails {
         Set<Role> roles = user.getRoles();
 
         for (Role role : roles) {
-            logger.info(role.getName());
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
 

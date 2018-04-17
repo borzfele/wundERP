@@ -103,7 +103,6 @@ import java.util.Arrays;
             textBuilder.append(dailyAccount.getComments());
 
             try {
-                logger.info(Arrays.toString(recipients));
                 mail = new SimpleMailMessage();
                 mail.setFrom(MAIL_FROM);
                 mail.setTo(recipients);
@@ -113,7 +112,6 @@ import java.util.Arrays;
 
             } catch (Exception e) {
                 logger.error(e.toString());
-                logger.error("wrong email address: " + Arrays.toString(recipients));
             }
         }
     }

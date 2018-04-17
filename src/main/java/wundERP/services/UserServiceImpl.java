@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User findByName(String name) {
-        logger.info("looking for user: " + name);
         return userRepository.findByName(name);
     }
 
@@ -41,11 +40,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
         if (user == null) {
-            logger.info("There's no user with name: " + name);
             throw new UsernameNotFoundException(name);
         }
 
-        logger.info("returning UserDetailsImpl with name: " + user.getName() + " password: " + user.getPassword() +" and role: " + user.getRoles().toString());
         return new UserDetailsImpl(user);
     }
 
