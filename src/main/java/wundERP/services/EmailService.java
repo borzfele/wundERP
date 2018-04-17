@@ -112,6 +112,7 @@ import java.util.Arrays;
                 mailSender.send(mail);
 
             } catch (Exception e) {
+                logger.error(e.toString());
                 logger.error("wrong email address: " + Arrays.toString(recipients));
             }
         }

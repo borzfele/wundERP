@@ -30,8 +30,21 @@ public class DBPopulator {
         User user = new User();
         user.setName("Melák");
         user.setPassword("Melák");
+        User user2 = new User();
+        user2.setName("Buzi");
+        user2.setPassword("vagyok");
 
         Role userRole = roleService.findByName("user");
+        Role adminRole = roleService.findByName("admin");
+
+        if (adminRole != null) {
+            user.getRoles().add(adminRole);
+        } else {
+            Role freshlyCreatedAdminRole = new Role();
+            freshlyCreatedAdminRole.setName("admin");
+            roleService.saveRole(freshlyCreatedAdminRole);
+            user2.getRoles().add(freshlyCreatedAdminRole);
+        }
 
         if (userRole != null) {
             user.getRoles().add(userRole);
@@ -42,9 +55,11 @@ public class DBPopulator {
             user.getRoles().add(freshlyCreatedUserRole);
         }
 
+        user2.setPassword(encriptor.encode(user2.getPassword()));
         user.setPassword(encriptor.encode(user.getPassword()));
 
         userService.saveUser(user);
+        userService.saveUser(user2);
 
     }
 
