@@ -1,6 +1,6 @@
 # wundERP
 
--Choose an issue
+-Choose an issue\n
 -Assign it to yourself
 -Create a new branch for it
 -Do magic
