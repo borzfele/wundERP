@@ -21,15 +21,13 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final DailyAccountService dailyAccountService;
     private final TransactionIssueService transactionIssueService;
-    private final RoleService roleService;
 
     @Autowired
-    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService, TransactionIssueService transactionIssueService, RoleService roleService) {
+    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService, TransactionIssueService transactionIssueService) {
         this.userService = userService;
         this.transactionService = transactionService;
         this.dailyAccountService = dailyAccountService;
         this.transactionIssueService = transactionIssueService;
-        this.roleService = roleService;
     }
 
     @RequestMapping(value = "/add-income", method = RequestMethod.POST)
