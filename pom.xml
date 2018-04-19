@@ -5,7 +5,7 @@
 
     <groupId>ReichsSoftWerke</groupId>
     <artifactId>wundERP</artifactId>
-    <version>0.1.1</version>
+    <version>1.0.666</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

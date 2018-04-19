@@ -17,16 +17,14 @@ import java.util.Arrays;
 
         private final static Logger logger = LoggerFactory.getLogger(EmailService.class);
         private final JavaMailSender mailSender;
-        private UserServiceImpl userService;
         @Value("${spring.mail.username}")
         private String MAIL_FROM;
         @Value("${app.mail.recipients}")
         private String[] recipients;
 
         @Autowired
-        public EmailService(JavaMailSender mailSender, UserServiceImpl userService) {
+        public EmailService(JavaMailSender mailSender) {
             this.mailSender = mailSender;
-            this.userService = userService;
         }
 
         public void sendClosingMessage(DailyAccount dailyAccount) {
@@ -92,7 +90,9 @@ import java.util.Arrays;
             textBuilder.append("\n");
 
             textBuilder.append("Not Documented Income: ");
-            textBuilder.append(dailyAccount.getCloseCash() + dailyAccount.getTerminalBalance() - dailyAccount.getCassaBalance());
+            textBuilder.append(dailyAccount.getCloseCash()
+                    - dailyAccount.getCassaBalance()
+                    + dailyAccount.getTerminalBalance() - dailyAccount.getOpenCash());
             textBuilder.append("\n");
 
             textBuilder.append("Total Balance: ");

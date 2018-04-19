@@ -14,7 +14,7 @@ import wundERP.services.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-/*
+
 @Component
 public class DBPopulator {
 
@@ -64,4 +64,3 @@ public class DBPopulator {
     }
 
 }
-*/
