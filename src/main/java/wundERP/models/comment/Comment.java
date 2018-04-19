@@ -14,8 +14,17 @@ public class Comment {
     private long id;
     private String text;
     private Calendar date;
+    private boolean checked;
 
     public Comment() {
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public long getId() {
