@@ -28,6 +28,18 @@ public class TransactionService {
         return transactionRepository.findAllByDailyAccount(dailyAccount);
     }
 
+    public List<Transaction> findAllByAfterClose(boolean afterClose) {
+        return transactionRepository.findAllByAfterClose(afterClose);
+    }
+
+    public void assignTransactionsToNextDailyAccount(List<Transaction> transactionList, DailyAccount dailyAccount) {
+        if (transactionList != null) {
+            for (Transaction transaction : transactionList) {
+                transaction.setDailyAccount(dailyAccount);
+            }
+        }
+    }
+
     public int getSumOf(List<Transaction> transactions) {
         int sum = 0;
 

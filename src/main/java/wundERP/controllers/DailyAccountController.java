@@ -42,6 +42,7 @@ public class DailyAccountController {
             dailyAccount.setOwner(userService.getCurrentUser());
             dailyAccount.setOpenDate(Calendar.getInstance());
             dailyAccount.setOpenCash(Integer.valueOf(openCash));
+            transactionService.assignTransactionsToNextDailyAccount(transactionService.findAllByAfterClose(true), dailyAccount);
             dailyAccountService.saveDailyAccount(dailyAccount);
             return "redirect:/workspace";
         } else {
