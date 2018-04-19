@@ -7,3 +7,6 @@
 -Do magic  
 -Send a pull request  
 ...and your name will be praised.
+
+
+-If you have any question, please write a comment under the given issue, or send me a mail
