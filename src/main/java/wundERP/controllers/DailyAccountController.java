@@ -68,9 +68,11 @@ public class DailyAccountController {
             lastOpened.setComments(comments);
             lastOpened.setClosed(true);
             int sumOfDailyTransactions = transactionService.getSumOf(transactionService.findAllByDailyAccount(dailyAccountService.findById(lastOpened.getId())));
+
             int dailyBalance = lastOpened.getCloseCash()
                     + lastOpened.getTerminalBalance()
                     - lastOpened.getOpenCash() + sumOfDailyTransactions;
+
             lastOpened.setDailyBalance(dailyBalance);
             lastOpened.setCloseDate(Calendar.getInstance());
             dailyAccountService.saveDailyAccount(lastOpened);
