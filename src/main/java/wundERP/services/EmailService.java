@@ -89,12 +89,6 @@ import java.util.Arrays;
             textBuilder.append(dailyAccount.getPosBalance());
             textBuilder.append("\n");
 
-            textBuilder.append("Not Documented Income: ");
-            textBuilder.append(dailyAccount.getCloseCash()
-                    - dailyAccount.getCassaBalance()
-                    + dailyAccount.getTerminalBalance() - dailyAccount.getOpenCash());
-            textBuilder.append("\n");
-
             textBuilder.append("Total Balance: ");
             textBuilder.append(dailyAccount.getDailyBalance());
             textBuilder.append("\n");

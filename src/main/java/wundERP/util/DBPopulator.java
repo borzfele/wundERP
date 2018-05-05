@@ -15,7 +15,7 @@ import wundERP.services.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-@Component
+//@Component
 public class DBPopulator {
 
     public DBPopulator(TransactionIssueService transactionIssueService, TransactionService transactionService, RoleService roleService, UserServiceImpl userService) {

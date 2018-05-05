@@ -4,14 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import wundERP.models.Transaction;
-import wundERP.models.TransactionIssue;
 import wundERP.services.*;
 
 import java.util.Calendar;
-import java.util.List;
 
 @Controller
 public class TransactionController {
@@ -21,15 +18,13 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final DailyAccountService dailyAccountService;
     private final TransactionIssueService transactionIssueService;
-    private final RoleService roleService;
 
     @Autowired
-    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService, TransactionIssueService transactionIssueService, RoleService roleService) {
+    public TransactionController(UserServiceImpl userService, TransactionService transactionService, DailyAccountService dailyAccountService, TransactionIssueService transactionIssueService) {
         this.userService = userService;
         this.transactionService = transactionService;
         this.dailyAccountService = dailyAccountService;
         this.transactionIssueService = transactionIssueService;
-        this.roleService = roleService;
     }
 
     @RequestMapping(value = "/add-income", method = RequestMethod.POST)
@@ -44,20 +39,20 @@ public class TransactionController {
         newIncome.setDescription(description);
         newIncome.setDate(Calendar.getInstance());
         newIncome.setOwner(userService.getCurrentUser());
-        if (dailyAccountService.getLast() != null) {
+
+        if (dailyAccountService.getLast() != null
+                && !dailyAccountService.getLast().isClosed()) {
             newIncome.setDailyAccount(dailyAccountService.getLast());
-        }
-        if (dailyAccountService.getLast()!= null && dailyAccountService.getLast().isClosed() &&
-                dailyAccountService.getLast().getCloseDate().before(newIncome.getDate())) {
-            newIncome.setAfterClose(true);
         } else {
-            newIncome.setAfterClose(false);
+            newIncome.setAfterClose(true);
         }
+
         if (isBank != null) {
             newIncome.setBankTransaction(true);
         } else {
             newIncome.setBankTransaction(false);
         }
+
         newIncome.setIssue(transactionIssueService.findByIssueName(issue));
         transactionService.saveTransaction(newIncome);
         return "redirect:/workspace";
@@ -75,22 +70,23 @@ public class TransactionController {
         newExpense.setDescription(description);
         newExpense.setDate(Calendar.getInstance());
         newExpense.setOwner(userService.getCurrentUser());
-        if (dailyAccountService.getLast() != null) {
+
+        if (dailyAccountService.getLast() != null
+                && !dailyAccountService.getLast().isClosed()) {
             newExpense.setDailyAccount(dailyAccountService.getLast());
-        }
-        if (dailyAccountService.getLast()!= null && dailyAccountService.getLast().isClosed() &&
-                dailyAccountService.getLast().getCloseDate().before(newExpense.getDate())) {
-            newExpense.setAfterClose(true);
         } else {
-            newExpense.setAfterClose(false);
+            newExpense.setAfterClose(true);
         }
+
         if (isBank != null) {
             newExpense.setBankTransaction(true);
         } else {
             newExpense.setBankTransaction(false);
         }
+
         newExpense.setIssue(transactionIssueService.findByIssueName(issue));
         transactionService.saveTransaction(newExpense);
+
         return "redirect:/workspace";
     }
 }

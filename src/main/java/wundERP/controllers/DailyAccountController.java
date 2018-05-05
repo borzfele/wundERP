@@ -42,6 +42,7 @@ public class DailyAccountController {
             dailyAccount.setOwner(userService.getCurrentUser());
             dailyAccount.setOpenDate(Calendar.getInstance());
             dailyAccount.setOpenCash(Integer.valueOf(openCash));
+            transactionService.assignTransactionsToNextDailyAccount(transactionService.findAllByAfterClose(true), dailyAccount);
             dailyAccountService.saveDailyAccount(dailyAccount);
             return "redirect:/workspace";
         } else {
@@ -57,6 +58,8 @@ public class DailyAccountController {
                                @RequestParam String posBalance,
                                @RequestParam String comments) {
 
+        int dailyBalance;
+
         if (!dailyAccountService.getLast().isClosed()) {
 
             DailyAccount lastOpened = dailyAccountService.getLast();
@@ -67,10 +70,19 @@ public class DailyAccountController {
             lastOpened.setPosBalance(Integer.valueOf(posBalance));
             lastOpened.setComments(comments);
             lastOpened.setClosed(true);
-            int sumOfDailyTransactions = transactionService.getSumOf(transactionService.findAllByDailyAccount(dailyAccountService.findById(lastOpened.getId())));
-            int dailyBalance = lastOpened.getCloseCash()
-                    + lastOpened.getTerminalBalance()
-                    - lastOpened.getOpenCash() + sumOfDailyTransactions;
+
+            if (transactionService.getSumOf(transactionService.findAllByDailyAccount(lastOpened)) < 0) {
+                dailyBalance = lastOpened.getCloseCash()
+                        - lastOpened.getOpenCash()
+                        + lastOpened.getTerminalBalance()
+                        - transactionService.getSumOf(transactionService.findAllByDailyAccount(lastOpened));
+            } else {
+                dailyBalance = lastOpened.getCloseCash()
+                        - lastOpened.getOpenCash()
+                        + lastOpened.getTerminalBalance()
+                        + transactionService.getSumOf(transactionService.findAllByDailyAccount(lastOpened));
+            }
+
             lastOpened.setDailyBalance(dailyBalance);
             lastOpened.setCloseDate(Calendar.getInstance());
             dailyAccountService.saveDailyAccount(lastOpened);
