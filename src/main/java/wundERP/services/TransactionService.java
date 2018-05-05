@@ -35,6 +35,7 @@ public class TransactionService {
     public void assignTransactionsToNextDailyAccount(List<Transaction> transactionList, DailyAccount dailyAccount) {
         if (transactionList != null) {
             for (Transaction transaction : transactionList) {
+                transaction.setAfterClose(false);
                 transaction.setDailyAccount(dailyAccount);
             }
         }
