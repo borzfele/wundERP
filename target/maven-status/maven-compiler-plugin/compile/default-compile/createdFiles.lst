@@ -1,9 +1,11 @@
 wundERP/repositories/DailyAccountRepository.class
+wundERP/services/EmailService.class
 wundERP/services/DailyAccountService.class
 wundERP/repositories/UserRepository.class
 wundERP/models/User.class
 wundERP/services/TransactionIssueService.class
 wundERP/WundERPWAR.class
+wundERP/models/TransactionIssueResponseBody.class
 wundERP/models/Role.class
 wundERP/repositories/TransactionRepository.class
 wundERP/services/RoleService.class
@@ -15,6 +17,7 @@ wundERP/models/DailyAccount.class
 wundERP/services/TransactionService.class
 wundERP/services/UserService.class
 wundERP/repositories/RoleRepository.class
+wundERP/controllers/TransactionIssueController.class
 wundERP/repositories/TransactionIssueRepository.class
 wundERP/models/Transaction.class
 wundERP/services/UserServiceImpl.class
